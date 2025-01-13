@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Nahdlatut Turot</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_cari">Cari</string>
+    <string name="title_favorit">Disimpan</string>
+    <string name="password_length">Password Minimal 8 Karakter</string>
+    <string name="email_requare">Harap isi Email dengan benar</string>
+    <string name="in">Masuk</string>
+    <string name="sub_in">Masukkan Email dan Password</string>
+    <string name="fill_email">Masukkan Email</string>
+    <string name="fill_password">Masukkan Password</string>
+    <string name="button_signin">Masuk</string>
+    <string name="button_signup">Daftar</string>
+    <string name="title_signup">Daftar</string>
+    <string name="bu_signup">Lengkapi Data Berikut Untuk Membuat Akun</string>
+    <string name="fill_name">Nama</string>
+</resources>
