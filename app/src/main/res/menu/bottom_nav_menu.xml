@@ -16,4 +16,8 @@
         android:icon="@drawable/baseline_bookmarks_24"
         android:title="@string/title_favorit" />
 
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/baseline_contacts_24"
+        android:title="@string/menu_profile" />
 </menu>

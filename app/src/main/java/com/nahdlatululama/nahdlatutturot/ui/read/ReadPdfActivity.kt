@@ -1,4 +1,4 @@
-package com.nahdlatululama.nahdlatutturot.ui
+package com.nahdlatululama.nahdlatutturot.ui.read
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

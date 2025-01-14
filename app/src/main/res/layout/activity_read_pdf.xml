@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ReadPdfActivity">
+    tools:context=".ui.read.ReadPdfActivity">
 
     <com.rajat.pdfviewer.PdfRendererView
         android:layout_width="match_parent"

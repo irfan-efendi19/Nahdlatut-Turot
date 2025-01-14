@@ -22,4 +22,10 @@
         android:name="com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite.FavoriteFragment"
         android:label="@string/title_favorit"
         tools:layout="@layout/fragment_saved" />
+
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -12,8 +12,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserModel
 import com.nahdlatululama.nahdlatutturot.ui.signup.SignUpActivity
-import com.bangkit.caraka.utill.isNetworkConnected
-import com.bangkit.caraka.utill.showToast
+import com.nahdlatululama.nahdlatutturot.utill.isNetworkConnected
+import com.nahdlatululama.nahdlatutturot.utill.showToast
 import com.google.gson.Gson
 import com.nahdlatululama.nahdlatutturot.ui.home.MainActivity
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory

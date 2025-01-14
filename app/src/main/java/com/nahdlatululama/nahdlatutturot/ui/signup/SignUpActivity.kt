@@ -13,8 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
 import com.nahdlatululama.nahdlatutturot.ui.signin.SignInActivity
-import com.bangkit.caraka.utill.isNetworkConnected
-import com.bangkit.caraka.utill.showToast
+import com.nahdlatululama.nahdlatutturot.utill.isNetworkConnected
+import com.nahdlatululama.nahdlatutturot.utill.showToast
 import com.google.gson.Gson
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.databinding.ActivitySignUpBinding
