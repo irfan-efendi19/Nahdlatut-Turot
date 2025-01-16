@@ -43,17 +43,14 @@ class AppRepository private constructor(
             }
         }
 
-    //fungsi menyimpan preference key
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
 
-    //mendapatkan sesi
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
     }
 
-    //fungsi logout
     suspend fun logout() {
         userPreference.logOut()
     }

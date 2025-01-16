@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     tools:context=".ui.home.bottomnav.search.SearchFragment">
 
@@ -17,15 +16,4 @@
             android:layout_height="wrap_content"
             android:hint="" />
     </com.google.android.material.appbar.AppBarLayout>
-
-    <com.google.android.material.search.SearchView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint=""
-        app:layout_anchor="@id/search_bar">
-
-        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
-
-    </com.google.android.material.search.SearchView>
-
 </LinearLayout>
