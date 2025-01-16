@@ -2,8 +2,10 @@ package com.nahdlatululama.nahdlatutturot.data.networking.service
 
 
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
+import com.nahdlatululama.nahdlatutturot.data.networking.response.BookResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
+import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -28,10 +30,7 @@ interface ApiService {
     ): LoginResponse
 
 
-    @GET("books")
-    suspend fun getBooks(
-        @Query("page") page: Int = 1,
-        @Query("size") size: Int = 10
-    ):BookList
+    @GET("stories")
+    fun getBook(): Call<BookResponse>
 
 }

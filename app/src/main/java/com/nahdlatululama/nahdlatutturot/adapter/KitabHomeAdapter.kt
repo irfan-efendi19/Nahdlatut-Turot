@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DiffUtil
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -41,9 +42,9 @@ class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF
                     val optionsCompat: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             itemView.context as Activity,
-                            androidx.core.util.Pair(ivCover, "cover"),
-                            androidx.core.util.Pair(tvTitle, "title"),
-                            androidx.core.util.Pair(tvAuthor, "author")
+                            Pair(ivCover, "cover"),
+                            Pair(tvTitle, "title"),
+                            Pair(tvAuthor, "author")
                         )
                     itemView.context.startActivity(intent, optionsCompat.toBundle())
                 }
