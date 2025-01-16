@@ -8,6 +8,7 @@ import com.nahdlatululama.nahdlatutturot.ui.signup.SignUpViewModel
 import com.nahdlatululama.nahdlatutturot.data.di.Injection
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepository
 import com.nahdlatululama.nahdlatutturot.ui.home.MainActivityViewModel
+import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home.HomeViewModel
 
 class ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -25,6 +26,10 @@ class ViewModelFactory(private val repository: AppRepository) :
 
             modelClass.isAssignableFrom(MainActivityViewModel::class.java) -> {
                 MainActivityViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

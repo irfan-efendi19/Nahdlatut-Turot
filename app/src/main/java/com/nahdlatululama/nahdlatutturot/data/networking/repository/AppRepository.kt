@@ -1,15 +1,21 @@
 package com.nahdlatululama.nahdlatutturot.data.networking.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserModel
-import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserPreference
 import com.google.gson.Gson
+import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
+import com.nahdlatululama.nahdlatutturot.data.networking.response.BookResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.service.ApiService
+import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserModel
+import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserPreference
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 
 class AppRepository private constructor(
     private val apiService: ApiService,
@@ -53,6 +59,30 @@ class AppRepository private constructor(
 
     suspend fun logout() {
         userPreference.logOut()
+    }
+
+    fun getBooks(): LiveData<ResultData<List<BookList>>> {
+        val result = MutableLiveData<ResultData<List<BookList>>>()
+        result.value = ResultData.Loading
+
+        apiService.getBook().enqueue(object : Callback<BookResponse> {
+            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        result.value = ResultData.Success(it.listStory)
+                    } ?: run {
+                        result.value = ResultData.Error ("No data available")
+                    }
+                } else {
+                    result.value = ResultData.Error("Error: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                result.value = ResultData.Error("Failure: ${t.message}")
+            }
+        })
+        return result
     }
 
     companion object {

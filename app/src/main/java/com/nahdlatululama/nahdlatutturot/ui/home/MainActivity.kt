@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
+
         navView.setupWithNavController(navController)
 
         getSession()
