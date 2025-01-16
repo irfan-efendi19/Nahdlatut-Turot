@@ -1,6 +1,7 @@
 package com.nahdlatululama.nahdlatutturot.data.networking.service
 
 
+import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
@@ -29,6 +30,7 @@ interface ApiService {
 
 
     @GET("books")
-    fun getBook(): Call<BookResponse>
+    fun getBook(): Call<List<BookList>>
+
 
 }

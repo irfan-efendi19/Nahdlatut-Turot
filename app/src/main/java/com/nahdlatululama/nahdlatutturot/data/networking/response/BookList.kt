@@ -6,8 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 
 data class BookResponse(
-
-	@field:SerializedName("listBooks")
+	@SerializedName("books")
 	val listStory: List<BookList> = emptyList(),
 )
 

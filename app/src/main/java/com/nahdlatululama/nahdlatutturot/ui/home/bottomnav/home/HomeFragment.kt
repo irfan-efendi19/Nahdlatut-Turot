@@ -1,6 +1,7 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
+import kotlin.math.log
 
 class HomeFragment : Fragment() {
 
@@ -51,6 +53,7 @@ class HomeFragment : Fragment() {
                 is ResultData.Error -> {
 //                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("Error :",result.error)
                 }
             }
         }

@@ -18,17 +18,18 @@
         <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.NahdlatutTurot" />
+            android:theme="@style/Theme.NahdlatutTurot">
+        </activity>
         <activity
             android:name=".ui.read.ReadPdfActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

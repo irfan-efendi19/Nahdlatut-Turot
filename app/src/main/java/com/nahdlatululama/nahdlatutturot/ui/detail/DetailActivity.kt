@@ -1,10 +1,12 @@
 package com.nahdlatululama.nahdlatutturot.ui.detail
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
 import com.nahdlatululama.nahdlatutturot.databinding.ActivityDetailBinding
+import com.nahdlatululama.nahdlatutturot.ui.read.ReadPdfActivity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -27,6 +29,15 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivCover)
         binding.tvTitle.text = bookList.title
         binding.tvDesc.text = bookList.description
+
+        binding.btnReadPdf.setOnClickListener {
+            if (bookList.pdfUrl.isNullOrEmpty()) {
+                Toast.makeText(this, "PDF tidak tersedia", Toast.LENGTH_SHORT).show()
+            } else {
+                ReadPdfActivity.start(this, bookList.pdfUrl)
+            }
+        }
+
     }
 
 

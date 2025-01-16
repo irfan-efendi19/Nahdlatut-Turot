@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.google.gson.Gson
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
-import com.nahdlatululama.nahdlatutturot.data.networking.response.BookResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.service.ApiService
@@ -65,21 +64,21 @@ class AppRepository private constructor(
         val result = MutableLiveData<ResultData<List<BookList>>>()
         result.value = ResultData.Loading
 
-        apiService.getBook().enqueue(object : Callback<BookResponse> {
-            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
+        apiService.getBook().enqueue(object : Callback<List<BookList>> {
+            override fun onResponse(call: Call<List<BookList>>, response: Response<List<BookList>>) {
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        result.value = ResultData.Success(it.listStory)
+                    response.body()?.let { books ->
+                        result.value = ResultData.Success(books)
                     } ?: run {
-                        result.value = ResultData.Error ("No data available")
+                        result.value = ResultData.Error("No data available")
                     }
                 } else {
                     result.value = ResultData.Error("Error: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                result.value = ResultData.Error("Failure: ${t.message}")
+            override fun onFailure(call: Call<List<BookList>>, t: Throwable) {
+                result.value = ResultData.Error("Failure: ${t.localizedMessage ?: "Unknown error"}")
             }
         })
         return result
