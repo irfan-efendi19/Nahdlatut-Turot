@@ -9,7 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
+import com.nahdlatululama.nahdlatutturot.adapter.CardAdapter
 import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
@@ -37,6 +42,17 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
+
+        val viewPager: ViewPager2 = view.findViewById(R.id.card_slide)
+
+        // Daftar gambar lokal
+        val images = listOf(
+            R.drawable.banner,
+            R.drawable.banner,
+        )
+
+        // Set adapter ke ViewPager2
+        viewPager.adapter = CardAdapter(images)
     }
 
     private fun observeViewModel() {

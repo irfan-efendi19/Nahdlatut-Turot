@@ -7,7 +7,7 @@ import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepositor
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
 
 class SignUpViewModel (private var repository: AppRepository) : ViewModel(){
-    suspend fun register(name: String, email: String, password: String): LiveData<ResultData<RegisterResponse>> {
+    fun register(name: String, email: String, password: String): LiveData<ResultData<RegisterResponse>> {
         return repository.register(name, email, password)
     }
 }
