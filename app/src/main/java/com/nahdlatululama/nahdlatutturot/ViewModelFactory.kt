@@ -9,6 +9,7 @@ import com.nahdlatululama.nahdlatutturot.data.di.Injection
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepository
 import com.nahdlatululama.nahdlatutturot.ui.home.MainActivityViewModel
 import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home.HomeViewModel
+import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.search.SearchViewModel
 
 class ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -30,6 +31,10 @@ class ViewModelFactory(private val repository: AppRepository) :
 
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
+                SearchViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

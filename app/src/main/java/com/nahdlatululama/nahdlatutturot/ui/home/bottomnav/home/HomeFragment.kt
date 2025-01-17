@@ -13,7 +13,6 @@ import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
-import kotlin.math.log
 
 class HomeFragment : Fragment() {
 
@@ -62,10 +61,11 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = KitabHomeAdapter()
         binding.rvAllBook.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = this@HomeFragment.adapter
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

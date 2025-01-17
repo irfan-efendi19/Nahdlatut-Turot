@@ -33,7 +33,7 @@ class ReadPdfActivity : AppCompatActivity() {
                 pdfUrl = pdfUrl.toString(),
                 pdfTitle = "Document Viewer",
                 saveTo = saveTo.ASK_EVERYTIME,
-                enableDownload = true
+                enableDownload = false
             )
         }
 

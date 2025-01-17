@@ -84,6 +84,19 @@ class AppRepository private constructor(
         return result
     }
 
+    suspend fun searchBooks(keyword: String): Result<List<BookList>> {
+        return try {
+            val response = apiService.searchBooks(keyword)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     companion object {
         fun clearInstance() {
             instance = null
