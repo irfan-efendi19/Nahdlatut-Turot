@@ -7,8 +7,11 @@ import com.nahdlatululama.nahdlatutturot.ui.signin.SignInViewModel
 import com.nahdlatululama.nahdlatutturot.ui.signup.SignUpViewModel
 import com.nahdlatululama.nahdlatutturot.data.di.Injection
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepository
+import com.nahdlatululama.nahdlatutturot.ui.detail.DetailViewModel
 import com.nahdlatululama.nahdlatutturot.ui.home.MainActivityViewModel
+import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite.FavoriteViewModel
 import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home.HomeViewModel
+import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.profile.ProfileViewModel
 import com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.search.SearchViewModel
 
 class ViewModelFactory(private val repository: AppRepository) :
@@ -36,6 +39,19 @@ class ViewModelFactory(private val repository: AppRepository) :
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
                 SearchViewModel(repository) as T
             }
+
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                DetailViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
+                FavoriteViewModel(repository) as T
+            }
+
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

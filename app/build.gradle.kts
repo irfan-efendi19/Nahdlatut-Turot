@@ -92,6 +92,9 @@ dependencies {
     //Lottie
     implementation (libs.lottie)
 
+    //circle imageview
+    implementation (libs.circleimageview )
+
     //PDF
     implementation("io.github.afreakyelf:Pdf-Viewer:2.1.1")
 }

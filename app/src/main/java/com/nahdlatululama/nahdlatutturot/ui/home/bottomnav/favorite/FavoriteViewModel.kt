@@ -3,11 +3,9 @@ package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepository
 
-class FavoriteViewModel : ViewModel() {
+class FavoriteViewModel(private val userRepository: AppRepository): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+    fun getUserFavorite() = userRepository.getFavoriteUser()
 }

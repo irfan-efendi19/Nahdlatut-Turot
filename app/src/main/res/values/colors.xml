@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="maingreen">#0C9146</color>
+    <color name="flatred">#eb4d4b</color>
 </resources>

@@ -65,18 +65,37 @@ class SignUpActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.signupButton.setOnClickListener {
             if (isNetworkConnected(context)) {
-                showLoading(true)
                 val name = binding.nameEditText.text.toString()
                 val email = binding.emailEditText.text.toString()
                 val password = binding.passwordEditText.text.toString()
 
+                var isValid = true // Tambahkan flag validasi
+
+                // Validasi input kosong
                 if (name.isEmpty()) {
+                    isValid = false
                     binding.nameEditTextLayout.error = "Nama Tidak Boleh Kosong"
-                } else if (email.isEmpty()) {
-                    binding.emailEditTextLayout.error = "Email Tidak Boleh Kosong"
-                } else if (password.isEmpty()) {
-                    binding.passwordEditTextLayout.error = "Password Tidak Boleh Kosong"
+                } else {
+                    binding.nameEditTextLayout.error = null
                 }
+
+                if (email.isEmpty()) {
+                    isValid = false
+                    binding.emailEditTextLayout.error = "Email Tidak Boleh Kosong"
+                } else {
+                    binding.emailEditTextLayout.error = null
+                }
+
+                if (password.isEmpty()) {
+                    isValid = false
+                    binding.passwordEditTextLayout.error = "Password Tidak Boleh Kosong"
+                } else {
+                    binding.passwordEditTextLayout.error = null
+                }
+
+                if (!isValid) return@setOnClickListener
+
+                showLoading(true)
 
                 lifecycleScope.launch {
                     try {
@@ -90,7 +109,7 @@ class SignUpActivity : AppCompatActivity() {
 
                                         is ResultData.Success -> {
                                             showLoading(false)
-                                            showToast(context,"Berhasil Mendaftar Akun")
+                                            showToast(context, "Berhasil Mendaftar Akun")
                                             val intent =
                                                 Intent(this@SignUpActivity, SignInActivity::class.java)
                                             intent.flags =
@@ -102,10 +121,6 @@ class SignUpActivity : AppCompatActivity() {
                                         is ResultData.Error -> {
                                             showLoading(false)
                                             showToast(context, result.error)
-                                        }
-
-                                        else -> {
-
                                         }
                                     }
                                 }
@@ -122,6 +137,7 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBarSignup.visibility =

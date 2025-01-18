@@ -17,11 +17,11 @@
         android:label="@string/title_cari"
         tools:layout="@layout/fragment_search" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite.FavoriteFragment"
-        android:label="@string/title_favorit"
-        tools:layout="@layout/fragment_saved" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:name="com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite.FavoriteFragment"-->
+<!--        android:label="@string/title_favorit"-->
+<!--        tools:layout="@layout/fragment_saved" />-->
 
     <fragment
         android:id="@+id/navigation_user"

@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.signup.SignUpActivity">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:backgroundTint="@color/maingreen"
         android:id="@+id/progress_bar_signup"
-        android:layout_width="40dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </ProgressBar>
+    </com.google.android.material.progressindicator.LinearProgressIndicator>
 
     <TextView
         android:id="@+id/titleTextView"
@@ -126,9 +126,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/button_signin"
+        android:layout_marginBottom="16dp"
         android:background="@color/transparent"
+        android:text="@string/button_signin"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupButton" />

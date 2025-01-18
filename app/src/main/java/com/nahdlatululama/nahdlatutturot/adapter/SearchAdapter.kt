@@ -5,21 +5,20 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.core.util.Pair
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
-import com.nahdlatululama.nahdlatutturot.databinding.ItemBookHomeBinding
+import com.nahdlatululama.nahdlatutturot.databinding.ItemPagerBinding
 import com.nahdlatululama.nahdlatutturot.ui.detail.DetailActivity
 
-
-class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF_CALLBACK) {
+class SearchAdapter : ListAdapter<BookList, SearchAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemBookHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -28,7 +27,7 @@ class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF
         holder.bind(book)
     }
 
-    inner class ViewHolder(private val binding: ItemBookHomeBinding) :
+    inner class ViewHolder(private val binding: ItemPagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(book: BookList) {
             with(binding) {

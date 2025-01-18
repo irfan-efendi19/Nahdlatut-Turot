@@ -1,38 +1,95 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.nahdlatululama.nahdlatutturot.ViewModelFactory
+import com.nahdlatululama.nahdlatutturot.adapter.FavoriteAdapter
+import com.nahdlatululama.nahdlatutturot.data.entity.KitabEntityFavorite
+import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentSavedBinding
+import com.nahdlatululama.nahdlatutturot.ui.detail.DetailActivity
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentSavedBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var username: String
+
+    private val viewModel by activityViewModels<FavoriteViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(FavoriteViewModel::class.java)
-
+    ): View? {
         _binding = FragmentSavedBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val view = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Retrieve username (or any other required data) from arguments
+        username = arguments?.getString(DetailActivity.DETAIL_STORY).orEmpty()
+
+        observer()
+        setupFavoriteRV()
+
+        return view
+    }
+
+    private fun observer() {
+        viewModel.getUserFavorite().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultData.Loading -> {
+                    // You can show a progress bar here if needed
+                    // binding.ProgressBarFavorite.show()
+                }
+
+                is ResultData.Success -> {
+                    // You can hide the progress bar here if needed
+                    // binding.ProgressBarFavorite.hide()
+                    setupRvData(result.data)
+                }
+
+                is ResultData.Error -> {
+                    // You can hide the progress bar here if needed
+                    // binding.ProgressBarFavorite.hide()
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+
+                else -> {
+                    // Handle any other case (if necessary)
+                }
+            }
         }
-        return root
+    }
+
+    private fun setupRvData(responseItems: List<KitabEntityFavorite>) {
+        val adapter = FavoriteAdapter().apply {
+            differ.submitList(responseItems)
+            onClick = { book ->
+                // Handle item click, pass data to DetailActivity (or another screen)
+                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.DETAIL_STORY, book)
+                }
+                startActivity(intent)
+            }
+        }
+
+        binding.rvFavoriteBook.adapter = adapter
+    }
+
+    private fun setupFavoriteRV() {
+        binding.rvFavoriteBook.apply {
+            val rvLayoutManager = LinearLayoutManager(requireContext())
+            layoutManager = rvLayoutManager
+        }
     }
 
     override fun onDestroyView() {
@@ -40,3 +97,4 @@ class FavoriteFragment : Fragment() {
         _binding = null
     }
 }
+

@@ -11,10 +11,10 @@
         android:icon="@drawable/baseline_search_24"
         android:title="@string/title_cari" />
 
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/baseline_bookmarks_24"
-        android:title="@string/title_favorit" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:icon="@drawable/baseline_bookmarks_24"-->
+<!--        android:title="@string/title_favorit" />-->
 
     <item
         android:id="@+id/navigation_user"

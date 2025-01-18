@@ -37,6 +37,6 @@ interface ApiService {
 
     @GET("books/search")
     suspend fun searchBooks(
-        @Query("keyword") keyword: String
+        @Query("q") keyword: String
     ): Response<List<BookList>>
 }

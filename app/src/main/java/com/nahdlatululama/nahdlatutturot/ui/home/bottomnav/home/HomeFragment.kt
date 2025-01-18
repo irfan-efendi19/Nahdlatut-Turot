@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
@@ -45,13 +43,11 @@ class HomeFragment : Fragment() {
 
         val viewPager: ViewPager2 = view.findViewById(R.id.card_slide)
 
-        // Daftar gambar lokal
         val images = listOf(
             R.drawable.banner,
             R.drawable.banner,
         )
 
-        // Set adapter ke ViewPager2
         viewPager.adapter = CardAdapter(images)
     }
 
@@ -59,14 +55,14 @@ class HomeFragment : Fragment() {
         viewModel.books.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultData.Loading -> {
-//                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ResultData.Success -> {
-//                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     adapter.submitList(result.data)
                 }
                 is ResultData.Error -> {
-//                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                     Log.e("Error :",result.error)
                 }

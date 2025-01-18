@@ -36,7 +36,7 @@ data class BookList(
 	val pdfUrl: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Int = 0,
 
 	@field:SerializedName("title")
 	val title: String? = null,

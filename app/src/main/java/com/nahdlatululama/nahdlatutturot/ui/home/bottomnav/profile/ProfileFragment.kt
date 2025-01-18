@@ -1,31 +1,46 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.profile
 
-import androidx.fragment.app.viewModels
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nahdlatululama.nahdlatutturot.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.nahdlatululama.nahdlatutturot.ViewModelFactory
+import com.nahdlatululama.nahdlatutturot.databinding.FragmentProfileBinding
+import com.nahdlatululama.nahdlatutturot.ui.signin.SignInActivity
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
-    private val viewModel: ProfileViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    private val viewModel by viewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(requireContext())
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnlogout.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.logout()
+            }
+            startActivity(Intent(this.context, SignInActivity::class.java))
+        }
     }
 }

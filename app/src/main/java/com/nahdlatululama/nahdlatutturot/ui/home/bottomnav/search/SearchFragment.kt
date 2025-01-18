@@ -1,69 +1,100 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.search
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.search.SearchBar
-import com.google.android.material.search.SearchView
-import com.nahdlatululama.nahdlatutturot.R
-import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
+import com.nahdlatululama.nahdlatutturot.ViewModelFactory
+import com.nahdlatululama.nahdlatutturot.adapter.SearchAdapter
+import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    private lateinit var searchEditText: EditText
-    private lateinit var searchButton: ImageButton
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: KitabHomeAdapter
-    private val bookViewModel: SearchViewModel by viewModels()
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter: SearchAdapter
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        searchEditText = view.findViewById(R.id.et_search)
-//        searchButton = view.findViewById(R.id.btn_search)
-//        recyclerView = view.findViewById(R.id.rv_search_results)
-//        progressBar = view.findViewById(R.id.progress_bar)
+        // Initialize ViewModel using Factory
+        val factory = ViewModelFactory.getInstance(requireContext())
+        viewModel = ViewModelProvider(this, factory)[SearchViewModel::class.java]
 
-        adapter = KitabHomeAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        setupRecyclerView()
+        observeViewModel()
+        setupSearchBar()
+    }
 
-        bookViewModel.searchResults.observe(viewLifecycleOwner) { books ->
-            adapter.submitList(books)
+    private fun setupRecyclerView() {
+        adapter = SearchAdapter()
+        binding.rvSearchResult.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@SearchFragment.adapter
         }
+    }
 
-        bookViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
-
-        searchButton.setOnClickListener {
-            val keyword = searchEditText.text.toString().trim()
-            if (keyword.isNotEmpty()) {
-                bookViewModel.searchBooks(keyword)
-            } else {
-                Toast.makeText(requireContext(), "Enter a keyword", Toast.LENGTH_SHORT).show()
+    private fun observeViewModel() {
+        viewModel.searchResults.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultData.Loading -> {
+                    // Show progress bar when loading
+//                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ResultData.Success -> {
+                    // Hide progress bar when loading is complete
+//                    binding.progressBar.visibility = View.GONE
+                    adapter.submitList(result.data)
+                }
+                is ResultData.Error -> {
+                    // Hide progress bar when there's an error
+//                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("SearchFragment", "Error: ${result.error}")
+                }
             }
         }
     }
+
+    private fun setupSearchBar() {
+        // Show search view when the search bar is clicked
+        binding.searchBar.setOnClickListener {
+            binding.searchView.show()
+        }
+
+        // Handle text input on SearchView
+        binding.searchView.editText.setOnEditorActionListener { textView, _, _ ->
+            val keyword = textView.text.toString().trim()
+            if (keyword.isNotEmpty()) {
+                viewModel.searchBooks(keyword)
+                binding.searchView.hide()
+            } else {
+                Toast.makeText(requireContext(), "Masukkan kata kunci", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
+
+

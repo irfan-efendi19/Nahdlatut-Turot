@@ -31,7 +31,7 @@ class ReadPdfActivity : AppCompatActivity() {
             PdfViewerActivity.launchPdfFromUrl(
                 context = this,
                 pdfUrl = pdfUrl.toString(),
-                pdfTitle = "Document Viewer",
+                pdfTitle = "Kitab Turots",
                 saveTo = saveTo.ASK_EVERYTIME,
                 enableDownload = false
             )
