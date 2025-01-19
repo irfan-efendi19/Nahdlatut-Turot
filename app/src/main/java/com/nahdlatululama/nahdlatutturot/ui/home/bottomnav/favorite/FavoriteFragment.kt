@@ -34,7 +34,6 @@ class FavoriteFragment : Fragment() {
         _binding = FragmentSavedBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Retrieve username (or any other required data) from arguments
         username = arguments?.getString(DetailActivity.DETAIL_STORY).orEmpty()
 
         observer()
@@ -47,24 +46,17 @@ class FavoriteFragment : Fragment() {
         viewModel.getUserFavorite().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultData.Loading -> {
-                    // You can show a progress bar here if needed
-                    // binding.ProgressBarFavorite.show()
                 }
 
                 is ResultData.Success -> {
-                    // You can hide the progress bar here if needed
-                    // binding.ProgressBarFavorite.hide()
                     setupRvData(result.data)
                 }
 
                 is ResultData.Error -> {
-                    // You can hide the progress bar here if needed
-                    // binding.ProgressBarFavorite.hide()
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                 }
 
                 else -> {
-                    // Handle any other case (if necessary)
                 }
             }
         }
@@ -74,7 +66,6 @@ class FavoriteFragment : Fragment() {
         val adapter = FavoriteAdapter().apply {
             differ.submitList(responseItems)
             onClick = { book ->
-                // Handle item click, pass data to DetailActivity (or another screen)
                 val intent = Intent(requireContext(), DetailActivity::class.java).apply {
                     putExtra(DetailActivity.DETAIL_STORY, book)
                 }

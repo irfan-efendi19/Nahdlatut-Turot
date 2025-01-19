@@ -53,17 +53,14 @@ class SearchFragment : Fragment() {
         viewModel.searchResults.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultData.Loading -> {
-                    // Show progress bar when loading
-//                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ResultData.Success -> {
-                    // Hide progress bar when loading is complete
-//                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     adapter.submitList(result.data)
                 }
                 is ResultData.Error -> {
-                    // Hide progress bar when there's an error
-//                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                     Log.e("SearchFragment", "Error: ${result.error}")
                 }
@@ -72,12 +69,10 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupSearchBar() {
-        // Show search view when the search bar is clicked
         binding.searchBar.setOnClickListener {
             binding.searchView.show()
         }
 
-        // Handle text input on SearchView
         binding.searchView.editText.setOnEditorActionListener { textView, _, _ ->
             val keyword = textView.text.toString().trim()
             if (keyword.isNotEmpty()) {

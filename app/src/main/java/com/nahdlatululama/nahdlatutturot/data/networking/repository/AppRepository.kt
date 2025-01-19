@@ -94,6 +94,31 @@ class AppRepository private constructor(
         return result
     }
 
+    fun getBooksCategory(genre: String): LiveData<ResultData<List<BookList>>> {
+        val result = MutableLiveData<ResultData<List<BookList>>>()
+        result.value = ResultData.Loading
+
+        apiService.getBooksByGenre(genre).enqueue(object : Callback<List<BookList>> {
+            override fun onResponse(call: Call<List<BookList>>, response: Response<List<BookList>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { books ->
+                        result.value = ResultData.Success(books)
+                    } ?: run {
+                        result.value = ResultData.Error("No data available")
+                    }
+                } else {
+                    result.value = ResultData.Error("Error: ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<List<BookList>>, t: Throwable) {
+                result.value = ResultData.Error("Failure: ${t.localizedMessage ?: "Unknown error"}")
+            }
+        })
+
+        return result
+    }
+
+
     fun getFavoriteUser(): MediatorLiveData<ResultData<List<KitabEntityFavorite>>> {
         result.value = ResultData.Loading
         val localData = kitabDAO.getAllFavorites()
@@ -118,7 +143,6 @@ class AppRepository private constructor(
                 resultS.postValue(ResultData.Error("Error saat menambahkan ke favorit"))
             }
         }
-
         return resultS
     }
 

@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: KitabHomeAdapter
+    private lateinit var categoryBooksAdapter1: KitabHomeAdapter
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
@@ -38,7 +39,7 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        setupRecyclerView()
+        setupRecyclerViews()
         observeViewModel()
 
         val viewPager: ViewPager2 = view.findViewById(R.id.card_slide)
@@ -49,6 +50,21 @@ class HomeFragment : Fragment() {
         )
 
         viewPager.adapter = CardAdapter(images)
+    }
+
+    private fun setupRecyclerViews() {
+        adapter = KitabHomeAdapter()
+        binding.rvAllBook.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapter
+        }
+
+//         Setup RecyclerView for Category Books
+//        categoryBooksAdapter1 = KitabHomeAdapter()
+//        binding.rvCategoryBooks.apply {
+//            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//            adapter = categoryBooksAdapter
+//        }
     }
 
     private fun observeViewModel() {
@@ -64,19 +80,48 @@ class HomeFragment : Fragment() {
                 is ResultData.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
-                    Log.e("Error :",result.error)
+                    Log.e("Error :", result.error)
+                }
+            }
+        }
+
+        // Observe Category Books
+//        viewModel.booksByCategory1.observe(viewLifecycleOwner) { result ->
+//            when (result) {
+//                is ResultData.Loading -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+//                }
+//                is ResultData.Success -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    adapterCategory1.submitList(result.data)
+//                }
+//                is ResultData.Error -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+//                    Log.e("Error :", result.error)
+//                }
+//            }
+//        }
+
+        // Mengamati kategori kedua
+        viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultData.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ResultData.Success -> {
+                    binding.progressBar.visibility = View.GONE
+//                    adapterCategory2.submitList(result.data)
+                }
+                is ResultData.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("Error :", result.error)
                 }
             }
         }
     }
 
-    private fun setupRecyclerView() {
-        adapter = KitabHomeAdapter()
-        binding.rvAllBook.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = this@HomeFragment.adapter
-        }
-    }
 
 
     override fun onDestroyView() {

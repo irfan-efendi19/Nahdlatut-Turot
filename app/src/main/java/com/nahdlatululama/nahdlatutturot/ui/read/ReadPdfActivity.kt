@@ -36,13 +36,11 @@ class ReadPdfActivity : AppCompatActivity() {
                 enableDownload = false
             )
         }
-
         binding.pdfView.initWithUrl(
             url = pdfUrl.toString(),
             lifecycleCoroutineScope = lifecycleScope,
             lifecycle = lifecycle
         )
-
         Log.e("PDF : ",pdfUrl.toString())
     }
 

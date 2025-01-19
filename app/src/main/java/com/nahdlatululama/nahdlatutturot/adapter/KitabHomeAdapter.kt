@@ -39,7 +39,7 @@ class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF
                     .placeholder(R.drawable.logoturot)
                     .into(ivCover)
 
-                itemView.setOnClickListener{
+                itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.DETAIL_STORY, book)
                     val optionsCompat: ActivityOptionsCompat =
@@ -73,3 +73,4 @@ class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF
         }
     }
 }
+
