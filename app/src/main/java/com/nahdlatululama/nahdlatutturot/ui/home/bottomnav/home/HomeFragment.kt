@@ -21,8 +21,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: KitabHomeAdapter
-    private lateinit var categoryBooksAdapter1: KitabHomeAdapter
+    private lateinit var kitabAdapter: KitabHomeAdapter
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
@@ -53,10 +52,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        adapter = KitabHomeAdapter()
+        kitabAdapter = KitabHomeAdapter()
         binding.rvAllBook.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapter
+            adapter = kitabAdapter
         }
 
 //         Setup RecyclerView for Category Books
@@ -75,7 +74,7 @@ class HomeFragment : Fragment() {
                 }
                 is ResultData.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    adapter.submitList(result.data)
+                    kitabAdapter.submitList(result.data)
                 }
                 is ResultData.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -104,22 +103,22 @@ class HomeFragment : Fragment() {
 //        }
 
         // Mengamati kategori kedua
-        viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is ResultData.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                is ResultData.Success -> {
-                    binding.progressBar.visibility = View.GONE
-//                    adapterCategory2.submitList(result.data)
-                }
-                is ResultData.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
-                    Log.e("Error :", result.error)
-                }
-            }
-        }
+//        viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
+//            when (result) {
+//                is ResultData.Loading -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+//                }
+//                is ResultData.Success -> {
+//                    binding.progressBar.visibility = View.GONE
+////                    adapterCategory2.submitList(result.data)
+//                }
+//                is ResultData.Error -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+//                    Log.e("Error :", result.error)
+//                }
+//            }
+//        }
     }
 
 

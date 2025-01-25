@@ -12,7 +12,7 @@ import com.nahdlatululama.nahdlatutturot.data.entity.KitabEntityFavorite
 @Dao
 interface KitabDAO {
     // Mendapatkan buku favorit berdasarkan ID
-    @Query("SELECT * FROM favorite_kitab WHERE idkitab = :id")
+    @Query("SELECT * FROM favorite_kitab WHERE id = :id")
     fun getFavoriteById(id: Int): LiveData<List<KitabEntityFavorite>>
 
     // Mendapatkan semua buku favorit
@@ -29,5 +29,4 @@ interface KitabDAO {
 
     @Update
     fun update(book: KitabEntityFavorite)
-
 }

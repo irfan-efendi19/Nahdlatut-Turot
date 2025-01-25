@@ -30,7 +30,7 @@ class FavoriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSavedBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -46,6 +46,7 @@ class FavoriteFragment : Fragment() {
         viewModel.getUserFavorite().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultData.Loading -> {
+                    // Show loading indicator if needed
                 }
 
                 is ResultData.Success -> {
@@ -67,7 +68,7 @@ class FavoriteFragment : Fragment() {
             differ.submitList(responseItems)
             onClick = { book ->
                 val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.DETAIL_STORY, book)
+                    putExtra(DetailActivity.DETAIL_STORY, book) // Sending Parcelable data
                 }
                 startActivity(intent)
             }
@@ -78,8 +79,7 @@ class FavoriteFragment : Fragment() {
 
     private fun setupFavoriteRV() {
         binding.rvFavoriteBook.apply {
-            val rvLayoutManager = LinearLayoutManager(requireContext())
-            layoutManager = rvLayoutManager
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
@@ -88,4 +88,5 @@ class FavoriteFragment : Fragment() {
         _binding = null
     }
 }
+
 

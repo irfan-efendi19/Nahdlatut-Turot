@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.nahdlatululama.nahdlatutturot.data.entity.KitabEntityFavorite
 
-@Database(entities = [KitabEntityFavorite::class], version = 8, exportSchema = false)
+@Database(entities = [KitabEntityFavorite::class], version = 9, exportSchema = false)
 abstract class KitabDatabase : RoomDatabase() {
     abstract fun favoriteKitabDao(): KitabDAO
 

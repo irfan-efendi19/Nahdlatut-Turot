@@ -32,20 +32,43 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val story = intent.getParcelableExtra<BookList>(DETAIL_STORY) as BookList
+        // Mengambil data dari Intent
+        val story = intent.getParcelableExtra<BookList>(DETAIL_STORY)
+        val favorite = intent.getParcelableExtra<KitabEntityFavorite>(DETAIL_FAVORITE)
 
-        detailViewModel.setBookData(story)
-
-        detailViewModel.bookData.observe(this, Observer { book ->
-            setupData(book)
-        })
-
-        setFavorite(story)
+        if (story != null) {
+            setupBookDetail(story)
+        } else if (favorite != null) {
+            setupFavoriteDetail(favorite)
+        } else {
+            Toast.makeText(this, "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
+    private fun setupBookDetail(book: BookList) {
+        detailViewModel.setBookData(book)
+        detailViewModel.bookData.observe(this) { bookData ->
+            setupData(bookData)
+        }
+        setFavorite(book)
+    }
+
+    private fun setupFavoriteDetail(favorite: KitabEntityFavorite) {
+        val book = BookList(
+            id = favorite.id,
+            title = favorite.title,
+            author = favorite.author,
+            description = "Deskripsi tidak tersedia", // Sesuaikan dengan kondisi Anda
+            thumbnailUrl = favorite.thumbnailUrl,
+            pdfUrl = null // Atur null jika tidak tersedia
+        )
+        setupData(book)
+        setFavorite(book)
+    }
 
     private fun setupData(bookList: BookList) {
-        Glide.with(applicationContext)
+        Glide.with(this)
             .load(bookList.thumbnailUrl)
             .placeholder(R.drawable.logoturot)
             .into(binding.ivCover)
@@ -54,36 +77,28 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDesc.text = bookList.description
         binding.tvAuthor.text = bookList.author
 
-//        binding.btnReadPdf.setOnClickListener {
-//            if (bookList.pdfUrl.isNullOrEmpty()) {
-//                Toast.makeText(this, "PDF tidak tersedia", Toast.LENGTH_SHORT).show()
-//            } else {
-//                ReadPdfActivity.start(this, bookList.pdfUrl)
-//            }
-//        }
-
         binding.btnReadPdf.apply {
-            visibility = if (bookList.pdfUrl.isNullOrEmpty()) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
-
+            visibility = if (bookList.pdfUrl.isNullOrEmpty()) View.GONE else View.VISIBLE
             setOnClickListener {
                 ReadPdfActivity.start(context, bookList.pdfUrl.toString())
             }
         }
-
     }
 
-    private fun setFavorite(kitab: BookList) {
-        val userEntity = KitabEntityFavorite(kitab.id, kitab.title, kitab.author)
-        detailViewModel.getUserInfo(kitab.id).observe(this) { favorites ->
+    private fun setFavorite(book: BookList) {
+        val userEntity = KitabEntityFavorite(
+            id = book.id,
+            title = book.title ?: "Unknown Title",
+            author = book.author ?: "Unknown Author",
+            thumbnailUrl = book.thumbnailUrl ?: ""
+        )
+
+        detailViewModel.getUserInfo(book.id).observe(this) { favorites ->
             isFavorite = favorites.isNotEmpty()
-            binding.btnFav.imageTintList = if (favorites.isEmpty()) {
-                ColorStateList.valueOf(Color.rgb(255, 255, 255)) // Not favorited (white color)
-            } else {
+            binding.btnFav.imageTintList = if (isFavorite) {
                 ColorStateList.valueOf(Color.rgb(255, 77, 77)) // Favorited (red color)
+            } else {
+                ColorStateList.valueOf(Color.rgb(0, 0, 0)) // Not favorited (white color)
             }
         }
 
@@ -100,24 +115,24 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
     private fun handleFavoriteResult(result: ResultData<String>) {
         when (result) {
-            is ResultData.Loading -> {
-                binding.btnFav.hide()
-            }
+            is ResultData.Loading -> binding.btnFav.isEnabled = false
             is ResultData.Success -> {
-                binding.btnFav.show()
+                binding.btnFav.isEnabled = true
                 Toast.makeText(this, result.data, Toast.LENGTH_SHORT).show()
             }
             is ResultData.Error -> {
-                binding.btnFav.show()
-                Toast.makeText(this, "Opps, ada yang salah nih.", Toast.LENGTH_SHORT).show()
+                binding.btnFav.isEnabled = true
+                Toast.makeText(this, "Terjadi kesalahan: ${result.error}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     companion object {
         const val DETAIL_STORY = "detail_story"
+        const val DETAIL_FAVORITE = "detail_favorite"
     }
 }
+
+
