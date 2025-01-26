@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,14 +18,25 @@
         android:indeterminate="true" >
     </com.google.android.material.progressindicator.LinearProgressIndicator>
 
-<androidx.viewpager2.widget.ViewPager2
-    android:id="@+id/card_slide"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:orientation="horizontal"
-    android:layout_margin="10dp"
-    android:elevation="10dp">
-</androidx.viewpager2.widget.ViewPager2>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/card_slide"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:elevation="10dp"/>
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/tablayout"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:ci_animator="@animator/scale_with_alpha"
+            app:ci_drawable="@drawable/circle"/>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -97,4 +97,6 @@ dependencies {
 
     //PDF
     implementation("io.github.afreakyelf:Pdf-Viewer:2.1.1")
+
+    implementation ("me.relex:circleindicator:2.1.6")
 }

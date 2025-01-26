@@ -1,6 +1,8 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.adapter.CardAdapter
 import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
+import com.nahdlatululama.nahdlatutturot.data.entity.BannerEntity
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
+import me.relex.circleindicator.CircleIndicator
+import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
 
@@ -23,6 +30,10 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var kitabAdapter: KitabHomeAdapter
     private lateinit var viewModel: HomeViewModel
+
+    private lateinit var viewPagerAuto: ViewPager2
+    private lateinit var tabLayout: CircleIndicator3
+    private val slideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,14 +52,39 @@ class HomeFragment : Fragment() {
         setupRecyclerViews()
         observeViewModel()
 
-        val viewPager: ViewPager2 = view.findViewById(R.id.card_slide)
 
-        val images = listOf(
-            R.drawable.banner,
-            R.drawable.banner,
+        viewPagerAuto = view.findViewById(R.id.card_slide)
+        tabLayout = view.findViewById(R.id.tablayout)
+
+
+        val banners = listOf(
+            BannerEntity(R.drawable.banner, "https://www.example.com/1"),
+            BannerEntity(R.drawable.banner, "https://www.example.com/2")
         )
 
-        viewPager.adapter = CardAdapter(images)
+        viewPagerAuto.adapter = CardAdapter(banners)
+
+
+//        val images = listOf(
+//            R.drawable.banner,
+//            R.drawable.banner,
+//        )
+//
+//        viewPagerAuto.adapter = CardAdapter(images)
+
+        tabLayout.setViewPager(viewPagerAuto)
+
+        startAutoSlide()
+    }
+
+    private fun startAutoSlide() {
+        slideHandler.postDelayed(object : Runnable {
+            override fun run() {
+                val nextItem = (viewPagerAuto.currentItem + 1) % viewPagerAuto.adapter!!.itemCount
+                viewPagerAuto.setCurrentItem(nextItem, true)
+                slideHandler.postDelayed(this, 3000) // Slide setiap 3 detik
+            }
+        }, 3000)
     }
 
     private fun setupRecyclerViews() {
