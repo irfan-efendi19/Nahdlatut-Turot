@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -61,7 +62,8 @@ class DetailActivity : AppCompatActivity() {
             author = favorite.author,
             description = favorite.description,
             thumbnailUrl = favorite.thumbnailUrl,
-            pdfUrl = favorite.pdfUrl
+            pdfUrl = favorite.pdfUrl,
+            pages = favorite.pages
         )
         setupData(book)
         setFavorite(book)
@@ -76,6 +78,9 @@ class DetailActivity : AppCompatActivity() {
         binding.tvTitle.text = bookList.title
         binding.tvDesc.text = bookList.description
         binding.tvAuthor.text = bookList.author
+        binding.tvJumblahHalaman.text = bookList.pages ?: "-"
+        binding.tvTahunterbit.text = bookList.publishedYear ?: "-"
+        binding.tvKategori.text = bookList.genre ?: "-"
 
         binding.btnReadPdf.apply {
             visibility = if (bookList.pdfUrl.isNullOrEmpty() || bookList.pdfUrl == "") View.GONE else View.VISIBLE
@@ -93,7 +98,10 @@ class DetailActivity : AppCompatActivity() {
             title = book.title,
             author = book.author,
             thumbnailUrl = book.thumbnailUrl,
-            pdfUrl = book.pdfUrl
+            pdfUrl = book.pdfUrl,
+            pages = book.pages,
+            genre = book.genre,
+            publishedYear = book.publishedYear
         )
 
         detailViewModel.getUserInfo(book.id).observe(this) { favorites ->
@@ -101,7 +109,7 @@ class DetailActivity : AppCompatActivity() {
             binding.btnFav.imageTintList = if (isFavorite) {
                 ColorStateList.valueOf(Color.rgb(255, 77, 77)) // Favorited (red color)
             } else {
-                ColorStateList.valueOf(Color.rgb(0, 0, 0)) // Not favorited (white color)
+                ContextCompat.getColorStateList(this, R.color.black)  // Not favorited (white color)
             }
         }
 
