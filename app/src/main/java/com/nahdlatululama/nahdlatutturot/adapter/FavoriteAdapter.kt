@@ -64,7 +64,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
         holder.bind(item)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java).apply {
-                putExtra(DetailActivity.DETAIL_FAVORITE, item)  // Mengirimkan KitabEntityFavorite
+                putExtra(DetailActivity.DETAIL_FAVORITE, item)
             }
             holder.itemView.context.startActivity(intent)
         }

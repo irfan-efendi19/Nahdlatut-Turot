@@ -59,9 +59,9 @@ class DetailActivity : AppCompatActivity() {
             id = favorite.id,
             title = favorite.title,
             author = favorite.author,
-            description = "Deskripsi tidak tersedia", // Sesuaikan dengan kondisi Anda
+            description = favorite.description,
             thumbnailUrl = favorite.thumbnailUrl,
-            pdfUrl = null // Atur null jika tidak tersedia
+            pdfUrl = favorite.pdfUrl
         )
         setupData(book)
         setFavorite(book)
@@ -78,9 +78,11 @@ class DetailActivity : AppCompatActivity() {
         binding.tvAuthor.text = bookList.author
 
         binding.btnReadPdf.apply {
-            visibility = if (bookList.pdfUrl.isNullOrEmpty()) View.GONE else View.VISIBLE
+            visibility = if (bookList.pdfUrl.isNullOrEmpty() || bookList.pdfUrl == "") View.GONE else View.VISIBLE
             setOnClickListener {
-                ReadPdfActivity.start(context, bookList.pdfUrl.toString())
+                bookList.pdfUrl?.let {
+                    ReadPdfActivity.start(context, it)
+                }
             }
         }
     }
@@ -88,9 +90,10 @@ class DetailActivity : AppCompatActivity() {
     private fun setFavorite(book: BookList) {
         val userEntity = KitabEntityFavorite(
             id = book.id,
-            title = book.title ?: "Unknown Title",
-            author = book.author ?: "Unknown Author",
-            thumbnailUrl = book.thumbnailUrl ?: ""
+            title = book.title,
+            author = book.author,
+            thumbnailUrl = book.thumbnailUrl,
+            pdfUrl = book.pdfUrl
         )
 
         detailViewModel.getUserInfo(book.id).observe(this) { favorites ->
@@ -134,5 +137,3 @@ class DetailActivity : AppCompatActivity() {
         const val DETAIL_FAVORITE = "detail_favorite"
     }
 }
-
-

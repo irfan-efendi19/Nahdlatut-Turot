@@ -9,9 +9,15 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "favorite_kitab")
 @Parcelize
 data class KitabEntityFavorite(
-    @PrimaryKey val id: Int,
-    val title: String,
-    val author: String,
-    val thumbnailUrl: String
-
+    @PrimaryKey
+    val id: Int,
+    val pages: String? = null,
+    val publishedYear: String? = null,
+    val author: String? = null,
+    val genre: String? = null,
+    val description: String? = null,
+    val pdfUrl: String? = null,
+    val title: String? = null,
+    val thumbnailUrl: String? = null,
 ) : Parcelable
+
