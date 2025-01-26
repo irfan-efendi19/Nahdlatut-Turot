@@ -90,7 +90,9 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerViews() {
         kitabAdapter = KitabHomeAdapter()
         binding.rvAllBook.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false).apply {
+                stackFromEnd = true
+            }
             adapter = kitabAdapter
         }
 

@@ -73,9 +73,18 @@ class FavoriteFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
-        binding.rvFavoriteBook.adapter = adapter
+        with(binding) {
+            rvFavoriteBook.adapter = adapter
+            if (responseItems.isEmpty()) {
+                rvFavoriteBook.visibility = View.GONE
+                tvEmptyfav.visibility = View.VISIBLE
+            } else {
+                rvFavoriteBook.visibility = View.VISIBLE
+                tvEmptyfav.visibility = View.GONE
+            }
+        }
     }
+
 
     private fun setupFavoriteRV() {
         binding.rvFavoriteBook.apply {
