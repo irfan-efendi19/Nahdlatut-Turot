@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.nahdlatululama.nahdlatutturot.R
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.adapter.CardAdapter
@@ -21,7 +19,6 @@ import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
 import com.nahdlatululama.nahdlatutturot.data.entity.BannerEntity
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
-import me.relex.circleindicator.CircleIndicator
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
@@ -29,6 +26,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var kitabAdapter: KitabHomeAdapter
+    private lateinit var categoryBooksAdapter1: KitabHomeAdapter
+    private lateinit var categoryBooksAdapter2: KitabHomeAdapter
     private lateinit var viewModel: HomeViewModel
 
     private lateinit var viewPagerAuto: ViewPager2
@@ -58,13 +57,12 @@ class HomeFragment : Fragment() {
 
 
         val banners = listOf(
-            BannerEntity(R.drawable.banner, "https://www.example.com/1"),
-            BannerEntity(R.drawable.banner, "https://www.example.com/2")
+            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
+            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
+            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
+            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
         )
-
         viewPagerAuto.adapter = CardAdapter(banners)
-
-
 //        val images = listOf(
 //            R.drawable.banner,
 //            R.drawable.banner,
@@ -82,9 +80,9 @@ class HomeFragment : Fragment() {
             override fun run() {
                 val nextItem = (viewPagerAuto.currentItem + 1) % viewPagerAuto.adapter!!.itemCount
                 viewPagerAuto.setCurrentItem(nextItem, true)
-                slideHandler.postDelayed(this, 3000) // Slide setiap 3 detik
+                slideHandler.postDelayed(this, 10000)
             }
-        }, 3000)
+        }, 10000)
     }
 
     private fun setupRecyclerViews() {
@@ -97,11 +95,17 @@ class HomeFragment : Fragment() {
         }
 
 //         Setup RecyclerView for Category Books
-//        categoryBooksAdapter1 = KitabHomeAdapter()
-//        binding.rvCategoryBooks.apply {
-//            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//            adapter = categoryBooksAdapter
-//        }
+        categoryBooksAdapter1 = KitabHomeAdapter()
+        binding.rvNahwu.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryBooksAdapter1
+        }
+
+        categoryBooksAdapter2 = KitabHomeAdapter()
+        binding.rvAkidah.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryBooksAdapter2
+        }
     }
 
     private fun observeViewModel() {
@@ -123,40 +127,39 @@ class HomeFragment : Fragment() {
         }
 
         // Observe Category Books
-//        viewModel.booksByCategory1.observe(viewLifecycleOwner) { result ->
-//            when (result) {
-//                is ResultData.Loading -> {
-//                    binding.progressBar.visibility = View.VISIBLE
-//                }
-//                is ResultData.Success -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    adapterCategory1.submitList(result.data)
-//                }
-//                is ResultData.Error -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
-//                    Log.e("Error :", result.error)
-//                }
-//            }
-//        }
+        viewModel.booksByCategory1.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultData.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ResultData.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    categoryBooksAdapter1.submitList(result.data)
+                }
+                is ResultData.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("Error :", result.error)
+                }
+            }
+        }
 
-        // Mengamati kategori kedua
-//        viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
-//            when (result) {
-//                is ResultData.Loading -> {
-//                    binding.progressBar.visibility = View.VISIBLE
-//                }
-//                is ResultData.Success -> {
-//                    binding.progressBar.visibility = View.GONE
-////                    adapterCategory2.submitList(result.data)
-//                }
-//                is ResultData.Error -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
-//                    Log.e("Error :", result.error)
-//                }
-//            }
-//        }
+        viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultData.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ResultData.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    categoryBooksAdapter2.submitList(result.data)
+                }
+                is ResultData.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("Error :", result.error)
+                }
+            }
+        }
     }
 
 

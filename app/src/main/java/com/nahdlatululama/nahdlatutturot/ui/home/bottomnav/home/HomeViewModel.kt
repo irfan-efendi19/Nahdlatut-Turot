@@ -20,8 +20,8 @@ class HomeViewModel(val repository: AppRepository) : ViewModel() {
 
     init {
         fetchBooks()
-        fetchBooksByCategory("tasawuf")
-        fetchBooksByCategory("fikih")
+        fetchBooksByCategory("Nahwu Sharaf")
+        fetchBooksByCategory("Akidah")
     }
 
     private fun fetchBooks() {
@@ -33,9 +33,8 @@ class HomeViewModel(val repository: AppRepository) : ViewModel() {
     private fun fetchBooksByCategory(category: String) {
         repository.getBooksCategory(category).observeForever {
             when (category) {
-                "tasawuf" -> _booksByCategory1.value = it
-                "fikih" -> _booksByCategory2.value = it
-                // Tambahkan kategori lainnya jika perlu
+                "Nahwu Sharaf" -> _booksByCategory1.value = it
+                "Akidah" -> _booksByCategory2.value = it
             }
         }
     }

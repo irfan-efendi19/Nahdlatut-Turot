@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:ci_animator="@animator/scale_with_alpha"
-            app:ci_drawable="@drawable/circle"/>
+            app:ci_drawable="@drawable/circle" />
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
@@ -46,6 +46,38 @@
         android:textSize="18sp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_all_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        tools:listitem="@layout/item_book_home">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nahwu Shorof"
+        android:layout_marginHorizontal="20dp"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_nahwu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        tools:listitem="@layout/item_book_home">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Akidah Akhlak"
+        android:layout_marginHorizontal="20dp"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_akidah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
