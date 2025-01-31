@@ -58,9 +58,6 @@ class HomeFragment : Fragment() {
 
         val banners = listOf(
             BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
-            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
-            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
-            BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
         )
         viewPagerAuto.adapter = CardAdapter(banners)
 //        val images = listOf(

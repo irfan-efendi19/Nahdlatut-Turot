@@ -18,16 +18,19 @@
         <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.NahdlatutTurot">
+            android:theme="@style/Theme.NahdlatutTurot"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.read.ReadPdfActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -35,10 +38,12 @@
         </activity>
         <activity
             android:name=".ui.signup.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.signin.SignInActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
