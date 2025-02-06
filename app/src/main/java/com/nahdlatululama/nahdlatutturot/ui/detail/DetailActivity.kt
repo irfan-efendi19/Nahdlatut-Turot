@@ -63,7 +63,9 @@ class DetailActivity : AppCompatActivity() {
             description = favorite.description,
             thumbnailUrl = favorite.thumbnailUrl,
             pdfUrl = favorite.pdfUrl,
-            pages = favorite.pages
+            pages = favorite.pages,
+            publishedYear = favorite.publishedYear,
+            genre = favorite.genre,
         )
         setupData(book)
         setFavorite(book)
@@ -78,7 +80,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvTitle.text = bookList.title
         binding.tvDesc.text = bookList.description
         binding.tvAuthor.text = bookList.author
-        binding.tvJumblahHalaman.text = bookList.pages ?: "-"
+        binding.tvJumblahHalaman.text = bookList.pages
         binding.tvTahunterbit.text = bookList.publishedYear ?: "-"
         binding.tvKategori.text = bookList.genre ?: "-"
 
@@ -98,6 +100,7 @@ class DetailActivity : AppCompatActivity() {
             title = book.title,
             author = book.author,
             thumbnailUrl = book.thumbnailUrl,
+            description = book.description,
             pdfUrl = book.pdfUrl,
             pages = book.pages,
             genre = book.genre,

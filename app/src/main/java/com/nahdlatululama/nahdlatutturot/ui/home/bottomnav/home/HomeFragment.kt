@@ -58,15 +58,9 @@ class HomeFragment : Fragment() {
 
         val banners = listOf(
             BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
+            BannerEntity(R.drawable.banner1, "https://youtu.be/vi1s-sigkTs?si=92t2wXrCsrPAH0Fc"),
         )
         viewPagerAuto.adapter = CardAdapter(banners)
-//        val images = listOf(
-//            R.drawable.banner,
-//            R.drawable.banner,
-//        )
-//
-//        viewPagerAuto.adapter = CardAdapter(images)
-
         tabLayout.setViewPager(viewPagerAuto)
 
         startAutoSlide()
@@ -77,7 +71,7 @@ class HomeFragment : Fragment() {
             override fun run() {
                 val nextItem = (viewPagerAuto.currentItem + 1) % viewPagerAuto.adapter!!.itemCount
                 viewPagerAuto.setCurrentItem(nextItem, true)
-                slideHandler.postDelayed(this, 10000)
+                slideHandler.postDelayed(this, 20000)
             }
         }, 10000)
     }
@@ -86,7 +80,6 @@ class HomeFragment : Fragment() {
         kitabAdapter = KitabHomeAdapter()
         binding.rvAllBook.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false).apply {
-                stackFromEnd = true
             }
             adapter = kitabAdapter
         }
