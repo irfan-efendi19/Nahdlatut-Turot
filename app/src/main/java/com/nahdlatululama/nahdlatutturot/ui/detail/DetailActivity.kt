@@ -5,9 +5,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.nahdlatululama.nahdlatutturot.R
@@ -32,6 +32,9 @@ class DetailActivity : AppCompatActivity() {
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setCustomView(R.layout.actionbar)
 
         // Mengambil data dari Intent
         val story = intent.getParcelableExtra<BookList>(DETAIL_STORY)
@@ -76,6 +79,8 @@ class DetailActivity : AppCompatActivity() {
             .load(bookList.thumbnailUrl)
             .placeholder(R.drawable.logoturot)
             .into(binding.ivCover)
+
+        supportActionBar?.title = bookList.title
 
         binding.tvTitle.text = bookList.title
         binding.tvDesc.text = bookList.description
@@ -141,6 +146,12 @@ class DetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Terjadi kesalahan: ${result.error}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        finish()
+        return true
     }
 
     companion object {

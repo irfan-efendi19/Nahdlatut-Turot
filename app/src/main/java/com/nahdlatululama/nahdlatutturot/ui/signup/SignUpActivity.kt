@@ -46,7 +46,6 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun setupView() {
@@ -69,9 +68,8 @@ class SignUpActivity : AppCompatActivity() {
                 val email = binding.emailEditText.text.toString()
                 val password = binding.passwordEditText.text.toString()
 
-                var isValid = true // Tambahkan flag validasi
+                var isValid = true
 
-                // Validasi input kosong
                 if (name.isEmpty()) {
                     isValid = false
                     binding.nameEditTextLayout.error = "Nama Tidak Boleh Kosong"
@@ -106,7 +104,6 @@ class SignUpActivity : AppCompatActivity() {
                                         is ResultData.Loading -> {
                                             showLoading(true)
                                         }
-
                                         is ResultData.Success -> {
                                             showLoading(false)
                                             showToast(context, "Berhasil Mendaftar Akun")

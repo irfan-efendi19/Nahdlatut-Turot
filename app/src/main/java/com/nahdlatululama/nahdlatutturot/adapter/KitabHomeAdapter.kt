@@ -63,7 +63,6 @@ class KitabHomeAdapter : ListAdapter<BookList, KitabHomeAdapter.ViewHolder>(DIFF
             ): Boolean {
                 return oldItem == newItem
             }
-
             override fun areContentsTheSame(
                 oldItem: BookList,
                 newItem: BookList

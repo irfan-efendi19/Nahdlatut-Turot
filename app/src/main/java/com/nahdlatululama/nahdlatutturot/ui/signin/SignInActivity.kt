@@ -83,7 +83,6 @@ class SignInActivity : AppCompatActivity() {
                                         is ResultData.Loading -> {
                                             showLoading(true)
                                         }
-
                                         is ResultData.Success -> {
                                             showLoading(false)
                                             showToast(this@SignInActivity, "Berhasil Masuk!")
@@ -103,16 +102,11 @@ class SignInActivity : AppCompatActivity() {
                                             showLoading(false)
                                             showToast(this@SignInActivity, result.error)
                                         }
-
-                                        else -> {
-
-                                        }
                                     }
                                 }
                             }
                         }
                     }
-
                 } catch (e: HttpException) {
                     showLoading(false)
                     val errorBody = e.response()?.errorBody()?.string()
@@ -135,7 +129,6 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

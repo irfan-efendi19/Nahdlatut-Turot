@@ -86,7 +86,6 @@ class AppRepository private constructor(
                     result.value = ResultData.Error("Error: ${response.message()}")
                 }
             }
-
             override fun onFailure(call: Call<List<BookList>>, t: Throwable) {
                 result.value = ResultData.Error("Failure: ${t.localizedMessage ?: "Unknown error"}")
             }
@@ -114,7 +113,6 @@ class AppRepository private constructor(
                 result.value = ResultData.Error("Failure: ${t.localizedMessage ?: "Unknown error"}")
             }
         })
-
         return result
     }
 

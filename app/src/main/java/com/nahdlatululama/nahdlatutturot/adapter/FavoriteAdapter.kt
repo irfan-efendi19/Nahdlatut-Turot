@@ -13,8 +13,6 @@ import com.nahdlatululama.nahdlatutturot.databinding.ItemPagerBinding
 import com.nahdlatululama.nahdlatutturot.ui.detail.DetailActivity
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
-
-    // ViewHolder untuk mengelola item
     class FavoriteHolder(private val binding: ItemPagerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: KitabEntityFavorite) {
             binding.tvAuthor.text = data.author
@@ -26,12 +24,11 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
         }
     }
 
-    // DiffUtil untuk optimasi pembaruan data
     private val diffUtil = object : DiffUtil.ItemCallback<KitabEntityFavorite>() {
         override fun areItemsTheSame(
             oldItem: KitabEntityFavorite, newItem: KitabEntityFavorite
         ): Boolean {
-            return oldItem.id == newItem.id // Asumsikan id unik
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
@@ -41,7 +38,6 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
         }
     }
 
-    // AsyncListDiffer untuk mengelola daftar dengan performa tinggi
     val differ = AsyncListDiffer(this, diffUtil)
     val currentList: List<KitabEntityFavorite>
         get() = differ.currentList

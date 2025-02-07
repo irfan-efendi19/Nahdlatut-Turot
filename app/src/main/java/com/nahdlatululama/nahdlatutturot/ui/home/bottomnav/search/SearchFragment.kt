@@ -32,7 +32,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize ViewModel using Factory
         val factory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, factory)[SearchViewModel::class.java]
 
@@ -61,7 +60,7 @@ class SearchFragment : Fragment() {
                 }
                 is ResultData.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Tidak Menemukan Kitab", Toast.LENGTH_SHORT).show()
                     Log.e("SearchFragment", "Error: ${result.error}")
                 }
             }
@@ -84,7 +83,6 @@ class SearchFragment : Fragment() {
             true
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

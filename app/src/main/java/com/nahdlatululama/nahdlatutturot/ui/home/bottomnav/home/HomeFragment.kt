@@ -1,5 +1,6 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,6 +20,7 @@ import com.nahdlatululama.nahdlatutturot.adapter.KitabHomeAdapter
 import com.nahdlatululama.nahdlatutturot.data.entity.BannerEntity
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.databinding.FragmentHomeBinding
+import com.nahdlatululama.nahdlatutturot.utill.showToast
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var kitabAdapter: KitabHomeAdapter
     private lateinit var categoryBooksAdapter1: KitabHomeAdapter
     private lateinit var categoryBooksAdapter2: KitabHomeAdapter
+    private lateinit var categoryBooksAdapter3: KitabHomeAdapter
     private lateinit var viewModel: HomeViewModel
 
     private lateinit var viewPagerAuto: ViewPager2
@@ -50,11 +53,10 @@ class HomeFragment : Fragment() {
 
         setupRecyclerViews()
         observeViewModel()
-
+        setupSwipeRefresh()
 
         viewPagerAuto = view.findViewById(R.id.card_slide)
         tabLayout = view.findViewById(R.id.tablayout)
-
 
         val banners = listOf(
             BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
@@ -64,6 +66,19 @@ class HomeFragment : Fragment() {
         tabLayout.setViewPager(viewPagerAuto)
 
         startAutoSlide()
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refreshData()
+            showToast(requireContext(),"Memperbarui Data")
+        }
+//        binding.swipeRefresh.postDelayed({
+//            if (binding.swipeRefresh.isRefreshing) {
+//                binding.swipeRefresh.isRefreshing = false
+//                showToast(requireContext(), "Gagal memperbarui data")
+//            }
+//        }, 2000)
     }
 
     private fun startAutoSlide() {
@@ -79,12 +94,10 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerViews() {
         kitabAdapter = KitabHomeAdapter()
         binding.rvAllBook.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false).apply {
-            }
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = kitabAdapter
         }
 
-//         Setup RecyclerView for Category Books
         categoryBooksAdapter1 = KitabHomeAdapter()
         binding.rvNahwu.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -96,32 +109,38 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryBooksAdapter2
         }
+
+        categoryBooksAdapter3 = KitabHomeAdapter()
+        binding.rvTasawuf.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryBooksAdapter3
+        }
     }
 
     private fun observeViewModel() {
         viewModel.books.observe(viewLifecycleOwner) { result ->
+            binding.swipeRefresh.isRefreshing = false
             when (result) {
-                is ResultData.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                is ResultData.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is ResultData.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    kitabAdapter.submitList(result.data)
+                    //urutan terbaru
+                    kitabAdapter.submitList(result.data.sortedByDescending { it.createdAt })
+//                    showToast(requireContext(),"Kitab Sukses Diperbarui")
                 }
                 is ResultData.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    showToast(requireContext(),"Gagal memperbarui kitab")
                     Log.e("Error :", result.error)
                 }
             }
         }
 
-        // Observe Category Books
         viewModel.booksByCategory1.observe(viewLifecycleOwner) { result ->
+            binding.swipeRefresh.isRefreshing = false
             when (result) {
-                is ResultData.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                is ResultData.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is ResultData.Success -> {
                     binding.progressBar.visibility = View.GONE
                     categoryBooksAdapter1.submitList(result.data)
@@ -135,10 +154,9 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.booksByCategory2.observe(viewLifecycleOwner) { result ->
+            binding.swipeRefresh.isRefreshing = false
             when (result) {
-                is ResultData.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                is ResultData.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is ResultData.Success -> {
                     binding.progressBar.visibility = View.GONE
                     categoryBooksAdapter2.submitList(result.data)
@@ -150,12 +168,26 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.booksByCategory3.observe(viewLifecycleOwner) { result ->
+            binding.swipeRefresh.isRefreshing = false
+            when (result) {
+                is ResultData.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is ResultData.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    categoryBooksAdapter3.submitList(result.data)
+                }
+                is ResultData.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("Error :", result.error)
+                }
+            }
+        }
     }
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+

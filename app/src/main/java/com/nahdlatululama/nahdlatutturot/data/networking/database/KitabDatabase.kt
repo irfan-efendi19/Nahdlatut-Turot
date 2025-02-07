@@ -9,7 +9,6 @@ import com.nahdlatululama.nahdlatutturot.data.entity.KitabEntityFavorite
 @Database(entities = [KitabEntityFavorite::class], version = 12, exportSchema = false)
 abstract class KitabDatabase : RoomDatabase() {
     abstract fun favoriteKitabDao(): KitabDAO
-
     companion object {
         @Volatile
         private var INSTANCE: KitabDatabase? = null

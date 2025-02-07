@@ -2,24 +2,22 @@ package com.nahdlatululama.nahdlatutturot.ui.read
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.nahdlatululama.nahdlatutturot.databinding.ActivityReadPdfBinding
-import com.rajat.pdfviewer.HeaderData
-import com.rajat.pdfviewer.PdfDownloader
-import com.rajat.pdfviewer.PdfViewerActivity
-import com.rajat.pdfviewer.util.saveTo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.net.URL
 
 class ReadPdfActivity : AppCompatActivity() {
@@ -29,24 +27,24 @@ class ReadPdfActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inflate the layout
         _binding = ActivityReadPdfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get PDF URL from Intent
+        setupView()
+
+        supportActionBar?.hide()
         val pdfUrl = intent.getStringExtra(PDF_URL)
 
         if (pdfUrl.isNullOrEmpty()) {
             Toast.makeText(this, "URL PDF tidak tersedia", Toast.LENGTH_SHORT).show()
             finish()
-            return // Early exit if URL is invalid
+            return
         }
-
-        // Log the PDF URL for debugging
         Log.e("ReadPdfActivity", "Loading PDF: $pdfUrl")
 
-        // Download PDF manually with timeout
+        binding.progressBarKitab.visibility = View.VISIBLE
+        binding.pdfView.visibility = View.GONE
+
         lifecycleScope.launch {
             try {
                 val pdfFile = downloadPdfWithTimeout(pdfUrl, 60_000) // 60 detik timeout
@@ -55,6 +53,9 @@ class ReadPdfActivity : AppCompatActivity() {
                 Log.e("ReadPdfActivity", "Error downloading or displaying PDF", e)
                 Toast.makeText(this@ReadPdfActivity, "Gagal memuat PDF: ${e.message}", Toast.LENGTH_SHORT).show()
                 finish()
+            } finally {
+                binding.progressBarKitab.visibility = View.GONE
+                binding.pdfView.visibility = View.VISIBLE
             }
         }
     }
@@ -79,9 +80,22 @@ class ReadPdfActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null // Avoid memory leaks
+        _binding = null
     }
 
     companion object {
@@ -94,6 +108,7 @@ class ReadPdfActivity : AppCompatActivity() {
         }
     }
 }
+
 
 
 

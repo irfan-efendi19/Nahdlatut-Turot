@@ -18,10 +18,14 @@ class HomeViewModel(val repository: AppRepository) : ViewModel() {
     private val _booksByCategory2 = MutableLiveData<ResultData<List<BookList>>>()
     val booksByCategory2: LiveData<ResultData<List<BookList>>> get() = _booksByCategory2
 
+    private val _booksByCategory3 = MutableLiveData<ResultData<List<BookList>>>()
+    val booksByCategory3: LiveData<ResultData<List<BookList>>> get() = _booksByCategory3
+
     init {
         fetchBooks()
         fetchBooksByCategory("Nahwu Sharaf")
         fetchBooksByCategory("Akidah")
+        fetchBooksByCategory("Tasawuf")
     }
 
     private fun fetchBooks() {
@@ -35,8 +39,15 @@ class HomeViewModel(val repository: AppRepository) : ViewModel() {
             when (category) {
                 "Nahwu Sharaf" -> _booksByCategory1.value = it
                 "Akidah" -> _booksByCategory2.value = it
+                "Tasawuf" -> _booksByCategory3.value = it
             }
         }
+    }
+    fun refreshData() {
+        fetchBooks()
+        fetchBooksByCategory("Nahwu Sharaf")
+        fetchBooksByCategory("Akidah")
+        fetchBooksByCategory("Tasawuf")
     }
 }
 
