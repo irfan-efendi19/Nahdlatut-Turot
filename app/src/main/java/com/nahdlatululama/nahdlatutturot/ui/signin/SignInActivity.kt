@@ -3,12 +3,12 @@ package com.nahdlatululama.nahdlatutturot.ui.signin
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -19,19 +19,16 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.nahdlatululama.nahdlatutturot.R
+import com.nahdlatululama.nahdlatutturot.ViewModelFactory
+import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserModel
+import com.nahdlatululama.nahdlatutturot.databinding.ActivitySigninBinding
+import com.nahdlatululama.nahdlatutturot.ui.home.MainActivity
 import com.nahdlatululama.nahdlatutturot.ui.signup.SignUpActivity
 import com.nahdlatululama.nahdlatutturot.utill.isNetworkConnected
 import com.nahdlatululama.nahdlatutturot.utill.showToast
-import com.google.gson.Gson
-import com.nahdlatululama.nahdlatutturot.R
-import com.nahdlatululama.nahdlatutturot.ui.home.MainActivity
-import com.nahdlatululama.nahdlatutturot.ViewModelFactory
-import com.nahdlatululama.nahdlatutturot.data.networking.repository.ResultData
-import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
-import com.nahdlatululama.nahdlatutturot.databinding.ActivitySigninBinding
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 class SignInActivity : AppCompatActivity() {
 

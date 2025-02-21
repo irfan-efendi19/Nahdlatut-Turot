@@ -1,6 +1,5 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.home
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

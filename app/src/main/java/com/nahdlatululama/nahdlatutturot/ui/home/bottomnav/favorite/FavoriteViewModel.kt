@@ -1,7 +1,5 @@
 package com.nahdlatululama.nahdlatutturot.ui.home.bottomnav.favorite
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nahdlatululama.nahdlatutturot.data.networking.repository.AppRepository
 
