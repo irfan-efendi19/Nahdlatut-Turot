@@ -11,6 +11,7 @@ import com.nahdlatululama.nahdlatutturot.data.networking.database.KitabDAO
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
+import com.nahdlatululama.nahdlatutturot.data.networking.response.UserResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.service.ApiService
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserModel
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserPreference
@@ -27,6 +28,9 @@ class AppRepository private constructor(
     private val appExecutors: AppExecutors
 ) {
 
+
+    private val _userDetail = MutableLiveData<UserResponse?>()
+    val userDetail: MutableLiveData<UserResponse?> = _userDetail
 
     private val result = MediatorLiveData<ResultData<List<KitabEntityFavorite>>>()
     private val resultS = MediatorLiveData<ResultData<String>>()
@@ -166,6 +170,21 @@ class AppRepository private constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun fetchUserDetail(userId: String, token: String): UserResponse? {
+        return try {
+            val response = apiService.getUserDetail("Bearer $token", userId)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+
 
     companion object {
         fun clearInstance() {

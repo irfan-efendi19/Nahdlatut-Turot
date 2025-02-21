@@ -4,12 +4,15 @@ package com.nahdlatululama.nahdlatutturot.data.networking.service
 import com.nahdlatululama.nahdlatutturot.data.networking.response.BookList
 import com.nahdlatululama.nahdlatutturot.data.networking.response.LoginResponse
 import com.nahdlatululama.nahdlatutturot.data.networking.response.RegisterResponse
+import com.nahdlatululama.nahdlatutturot.data.networking.response.UserResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -39,4 +42,10 @@ interface ApiService {
     suspend fun searchBooks(
         @Query("q") keyword: String
     ): Response<List<BookList>>
+
+    @GET("user/{id}")
+    suspend fun getUserDetail(
+        @Header("Authorization") authHeader: String,
+        @Path("id") userId: String
+    ): Response<UserResponse>
 }

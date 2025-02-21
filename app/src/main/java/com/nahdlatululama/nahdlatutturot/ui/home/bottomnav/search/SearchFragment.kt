@@ -32,8 +32,13 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvEmptyfav.visibility = View.VISIBLE
+        binding.rvSearchResult.visibility = View.VISIBLE
+
         val factory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, factory)[SearchViewModel::class.java]
+
+        binding.progressBar.visibility = View.GONE
 
         setupRecyclerView()
         observeViewModel()
@@ -53,13 +58,23 @@ class SearchFragment : Fragment() {
             when (result) {
                 is ResultData.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.tvEmptyfav.visibility = View.GONE
                 }
                 is ResultData.Success -> {
                     binding.progressBar.visibility = View.GONE
                     adapter.submitList(result.data)
+                    binding.rvSearchResult.visibility = View.VISIBLE
+
+                    if (result.data.isEmpty()) {
+                        binding.tvEmptyfav.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmptyfav.visibility = View.GONE
+                    }
                 }
                 is ResultData.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.tvEmptyfav.visibility = View.VISIBLE
+                    binding.rvSearchResult.visibility = View.GONE
                     Toast.makeText(requireContext(), "Tidak Menemukan Kitab", Toast.LENGTH_SHORT).show()
                     Log.e("SearchFragment", "Error: ${result.error}")
                 }

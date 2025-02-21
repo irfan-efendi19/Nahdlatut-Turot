@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var kitabAdapter: KitabHomeAdapter
     private lateinit var categoryBooksAdapter1: KitabHomeAdapter
     private lateinit var categoryBooksAdapter2: KitabHomeAdapter
@@ -59,6 +60,7 @@ class HomeFragment : Fragment() {
         tabLayout = view.findViewById(R.id.tablayout)
 
         val banners = listOf(
+            BannerEntity(R.drawable.bannweb, "https://nahdlatutturots.or.id/web/"),
             BannerEntity(R.drawable.banner, "https://www.youtube.com/live/vYZ0yK872zc?si=_yxh1R6BX4sa339h"),
             BannerEntity(R.drawable.banner1, "https://youtu.be/vi1s-sigkTs?si=92t2wXrCsrPAH0Fc"),
         )

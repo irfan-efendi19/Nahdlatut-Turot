@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -15,7 +16,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -98,5 +97,12 @@ dependencies {
     //PDF
     implementation("io.github.afreakyelf:Pdf-Viewer:2.1.1")
 
-    implementation ("me.relex:circleindicator:2.1.6")
+    implementation (libs.circleindicator)
+//    implementation (libs.firebase.firestore)
+    implementation ("com.google.android.gms:play-services-auth:21.3.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+
+
+    // Import the Firebase BoM
+//    implementation(platform(libs.firebase.bom))
 }

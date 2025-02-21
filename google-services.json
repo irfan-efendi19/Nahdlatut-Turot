@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298146431714",
+    "project_id": "nahdlatut-turots-8a85a",
+    "storage_bucket": "nahdlatut-turots-8a85a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298146431714:android:086620b2ede3453c5d94bb",
+        "android_client_info": {
+          "package_name": "com.nahdlatululama.nahdlatutturot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtkGvs4Sw9gbBE-uLuCmYlloffqZHwTps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

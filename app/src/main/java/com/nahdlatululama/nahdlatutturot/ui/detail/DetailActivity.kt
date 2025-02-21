@@ -1,7 +1,9 @@
 package com.nahdlatululama.nahdlatutturot.ui.detail
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -85,7 +87,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvTitle.text = bookList.title
         binding.tvDesc.text = bookList.description
         binding.tvAuthor.text = bookList.author
-        binding.tvJumblahHalaman.text = bookList.pages
+        binding.tvJumblahHalaman.text = bookList.pages ?: "-"
         binding.tvTahunterbit.text = bookList.publishedYear ?: "-"
         binding.tvKategori.text = bookList.genre ?: "-"
 
@@ -95,6 +97,18 @@ class DetailActivity : AppCompatActivity() {
                 bookList.pdfUrl?.let {
                     ReadPdfActivity.start(context, it)
                 }
+            }
+        }
+
+        binding.btnShare.apply {
+            setOnClickListener {
+                val textToShare = "Kitab "+ bookList.title + " karya " + bookList.author + " Tersedia di Aplikasi Nahdlatut Turots"
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, textToShare)
+                    type = "text/plain"
+                }
+                context.startActivity(Intent.createChooser(intent, "Bagikan melalui"))
             }
         }
     }
