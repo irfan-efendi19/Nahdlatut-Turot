@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.nahdlatululama.nahdlatutturot.ViewModelFactory
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.UserPreference
 import com.nahdlatululama.nahdlatutturot.data.networking.userPreference.dataStore
@@ -25,6 +28,8 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +43,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val userPreference = UserPreference.getInstance(requireContext().dataStore)
+
 
         lifecycleScope.launch {
             userPreference.getSession().collect { user ->
@@ -57,6 +63,8 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        firebaseAuth = FirebaseAuth.getInstance()
+
         viewModel.userDetail.observe(viewLifecycleOwner) { user ->
 //            binding.txtName.text = user?.name ?: "No Data"
 //            binding.txtEmail.text = user?.email ?: "No Data"
@@ -68,6 +76,15 @@ class ProfileFragment : Fragment() {
                 startActivity(Intent(requireContext(), SignInActivity::class.java))
                 requireActivity().finish()
             }
+            firebaseAuth.signOut()
+            GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut()
+                .addOnCompleteListener {
+                    // Redirect ke SignInActivity
+                    val intent = Intent(requireContext(), SignInActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
         }
     }
 
