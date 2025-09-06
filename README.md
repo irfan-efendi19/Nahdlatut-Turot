@@ -1,5 +1,11 @@
 # 📚 Nahdlatut-Turots
 
+<br />
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-plain.svg" width="175" height="175" alt="android-logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" width="175" height="175" alt="firebase-logo"/>        
+</div>
+
 The digitisation of turots manuscripts by Nahdlatut Turots is important for preserving Islamic intellectual heritage that is vulnerable to damage. Turots includes the works of scholars in the fields of fiqh, tauhid, tasawuf, and Arabic language, which are often written in Arabic or Pegon script. This study aims to develop an Android-based application that enables the digital preservation and management of turots books, facilitates access, and opens opportunities for further research. The methods used are the System Development Life Cycle (SDLC) with the Rapid Application Development (RAD) model, as well as evaluation using the Technology Acceptance Model (TAM) and blackbox testing. This application is expected to expand the preservation of turots books, improve accessibility, and support the digital conservation of the intellectual heritage of the Nusantara scholars.
 
 ---
