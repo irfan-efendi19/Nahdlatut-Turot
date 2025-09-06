@@ -4,7 +4,7 @@ The digitisation of turots manuscripts by Nahdlatut Turots is important for pres
 
 ---
 
-## 📥 Link App
+## 📥 Application Link
 
 - **Download APK Android**  
   [Click Here](https://drive.google.com/file/d/1JlEEKsBh3JXVJl72w76TftgyKlr2o2L9/view?usp=sharing)
@@ -13,7 +13,7 @@ The digitisation of turots manuscripts by Nahdlatut Turots is important for pres
 
 ## 📂 Repository
 
-| Komponen         | Link Repository |
+| Component         | Link Repository |
 |------------------|-----------------|
 | **Android App**  | [Nahdlatut-Turot](https://github.com/irfan-efendi19/Nahdlatut-Turot.git) |
 | **Web Front-End**| [frontend-nahdlatut-turots](https://github.com/irfan-efendi19/frontend-nahdlatut-turots) |
@@ -23,5 +23,5 @@ The digitisation of turots manuscripts by Nahdlatut Turots is important for pres
 
 ## 📑 API Documentation
 
-Dokumentasi lengkap endpoint tersedia di Postman:  
+Full API endpoint documentation is available on Postman: 
 [API Docs](https://documenter.getpostman.com/view/29522198/2sAYQUquEg)
